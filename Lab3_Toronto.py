@@ -8,10 +8,10 @@ import pandas as pd
 import numpy as np
 
 
-filepath="D:\\work\\github\\Coursera_Capstone\\"
+#filepath="D:\\work\\github\\Coursera_Capstone\\"
 file_in="Toronto.xlsx"
 
-df=pd.read_excel(filepath+file_in)
+df=pd.read_excel(file_in)
 df.columns.values
 print("Start count:",len(df))
 df.replace("Not assigned",np.nan,inplace=True)
@@ -36,3 +36,15 @@ for i in df.index:
         Postcode=str(df.loc[i,"Postcode"])
 print(df2.head())
 print("After summarizing PostalCode:",df2.shape)        
+df2.to_csv("Toronto_PostalCode.csv")
+geo_df=pd.read_csv("Geospatial_Coordinates.csv") 
+print(geo_df.head())
+geo_df.set_index("Postal Code",inplace=True)
+La = np.array([])
+Lo = np.array([])
+for i in df2.index:    
+    La=np.append(La,[geo_df.loc[df2.loc[i,"PostalCode"],"Latitude"]])
+    Lo=np.append(Lo,[geo_df.loc[df2.loc[i,"PostalCode"],"Longitude"]])
+df2["Latitude"]=La
+df2["Longitude"]=Lo
+print(df2.head())
