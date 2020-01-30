@@ -48,3 +48,4 @@ for i in df2.index:
 df2["Latitude"]=La
 df2["Longitude"]=Lo
 print(df2.head())
+print(len(df["Neighbourhood"].unique()))
